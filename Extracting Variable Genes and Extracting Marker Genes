@@ -1,0 +1,26 @@
+Extracting Variable Genes
+
+import scanpy as sc
+
+adata = sc.datasets.pbmc68k_reduced()
+sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
+
+highly_variable_genes = adata.var[adata.var['highly_variable']].index.tolist()
+print(highly_variable_genes[:10])
+
+Extracting Marker Genes from Differential Expression Analysis
+
+import scanpy as sc
+import pandas as pd
+
+adata = sc.datasets.pbmc68k_reduced()
+sc.tl.leiden(adata) # Perform clustering
+sc.tl.rank_genes_groups(adata, 'leiden', method='t-test')
+
+# Extract top N marker genes for a specific group (e.g., group '0')
+group_0_markers = pd.DataFrame(adata.uns['rank_genes_groups']['names'])['0'].tolist()
+print(group_0_markers[:10])
+
+# To get a DataFrame of all ranked genes with associated statistics:
+ranked_genes_df = sc.get.rank_genes_groups_df(adata, group='0')
+print(ranked_genes_df.head())
