@@ -7,7 +7,7 @@ sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
 
 highly_variable_genes = adata.var[adata.var['highly_variable']].index.tolist()
 print(highly_variable_genes[:10])
-
+***********************************************************************************************************
 Extracting Marker Genes from Differential Expression Analysis
 
 import scanpy as sc
